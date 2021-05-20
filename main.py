@@ -7,11 +7,11 @@ app = Flask(__name__)
 
 
 def get_data():
-	line = ""
-	if(ser_obj.in_waiting > 0):
-		line = ser_obj.readline()
-		print(line)
-		return line
+    line = ""
+    if(ser_obj.in_waiting > 0):
+        line = ser_obj.readline()
+        print(line)
+        return line
 
 
 @app.route("/")
@@ -24,6 +24,8 @@ def index():
     mq9val = get_data().split("=")[-1].strip()
     mq2val = get_data().split("=")[-1].strip()
     mq4val = get_data().split("=")[-1].strip()
+    get_data()
+    get_data()
     templateData = {
         'title': 'AIR QUALITY INDEX!',
         'tempt': tempval,
