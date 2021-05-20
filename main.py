@@ -1,11 +1,9 @@
 import RPi.GPIO as GPIO
 import serial as ser
 from flask import Flask, render_template, jsonify
-from flask_cors import CORS
 
 ser_obj = ser.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
-CORS(app)
 
 def get_data():
     line = ""
@@ -42,6 +40,6 @@ def api_get_data():
 @app.route("/")
 def home():
 	return render_template("index.html")
-	
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
