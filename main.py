@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 def get_data():
-	line = None
+	line = ""
 	if(ser_obj.in_waiting > 0):
 		line = ser_obj.readline()
 		print(line)
@@ -17,14 +17,13 @@ def get_data():
 @app.route("/")
 def index():
     # Read Sensors Status
-    line = get_data()
-    tempval = line[0]
-    humval = line[1]
-    mq3val = line[3]
-    mq135val = line[4]
-    mq9val = line[5]
-    mq2val = line[6]
-    mq4val = line[7]
+    tempval = get_data().split("=")[-1].strip()
+    humval = get_data().split("=")[-1].strip()
+    mq3val = get_data().split("=")[-1].strip()
+    mq135val = get_data().split("=")[-1].strip()
+    mq9val = get_data().split("=")[-1].strip()
+    mq2val = get_data().split("=")[-1].strip()
+    mq4val = get_data().split("=")[-1].strip()
     templateData = {
         'title': 'AIR QUALITY INDEX!',
         'tempt': tempval,
