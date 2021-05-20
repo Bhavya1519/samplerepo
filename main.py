@@ -25,7 +25,6 @@ def index():
     mq2val = get_data().split("=")[-1].strip()
     mq4val = get_data().split("=")[-1].strip()
     get_data()
-    get_data()
     templateData = {
         'title': 'AIR QUALITY INDEX!',
         'tempt': tempval,
