@@ -10,11 +10,10 @@ def get_data():
     line = ""
     if(ser_obj.in_waiting > 0):
         line = ser_obj.readline()
-        print(line)
         return line
 
 
-@app.route("/")
+@app.route("/api/v1/get_data")
 def index():
     # Read Sensors Status
     tempval = get_data().split("=")[-1].strip()
@@ -37,8 +36,6 @@ def index():
 
     }
     return jsonify(templateData)
-    # return render_template('index2.html', **templateData)
-
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
