@@ -1,12 +1,14 @@
 import RPi.GPIO as GPIO
 import serial as ser
 from flask import Flask, render_template
+
+ser_obj = ser.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
 
 
 while 1:
-    if(ser.in_waiting > 0):
-        line = ser.readline()
+    if(ser_obj.in_waiting > 0):
+        line = ser_obj.readline()
         print(line)
 
     @app.route("/")
