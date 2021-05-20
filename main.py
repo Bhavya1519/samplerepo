@@ -28,7 +28,7 @@ def index():
     templateData = {
         'title': 'AIR QUALITY INDEX!',
         'tempt': tempval,
-        'Hum': tempval,
+        'Hum': humval,
         'MQ3': mq3val,
         'MQ135': mq135val,
         'MQ9': mq9val,
