@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import serial as ser
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 ser_obj = ser.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
@@ -36,7 +36,8 @@ def index():
         'MQ4': mq4val
 
     }
-    return render_template('index2.html', **templateData)
+    return jsonify(templateData)
+    # return render_template('index2.html', **templateData)
 
 
 if __name__ == "__main__":
