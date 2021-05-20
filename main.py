@@ -10,7 +10,8 @@ def get_data():
     line = ""
     if(ser_obj.in_waiting > 0):
         line = ser_obj.readline()
-        return line
+
+    return line
 
 
 @app.route("/api/v1/get_data")
@@ -36,6 +37,7 @@ def index():
 
     }
     return jsonify(templateData)
+
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
