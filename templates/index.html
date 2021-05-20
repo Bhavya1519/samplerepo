@@ -1,10 +1,467 @@
 <!DOCTYPE html>
-   <head>
-      <title>{{ title }}</title>
-      <link rel="stylesheet" href="../static/style.css/">
-   </head>
-   <body>
-      <h1>Hello, World!</h1>
-      <h2>The date and time on the server is: {{ time }}</h2>
-   </body>
+<html>
+  <head>
+    <title>Air Quality Index</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Raleway"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script type="text/javascript">
+      let BASE_URL = "/api/v1/get_data";
+      function setData(
+        temperature,
+        humidity,
+        carbon_monoxide,
+        nox,
+        alcohol,
+        smoke,
+        methane
+      ) {
+        document.getElementById("temperature").innerText = temperature;
+        document.getElementById("humidity").innerText = humidity;
+        document.getElementById("carbon_monoxide").innerText = carbon_monoxide;
+        document.getElementById("nox").innerText = nox;
+        document.getElementById("alcohol").innerText = alcohol;
+        document.getElementById("smoke").innerText = smoke;
+        document.getElementById("methane").innerText = methane;
+      }
+      $(document).ready(function () {
+        setInterval(() => {
+          $.
+            get(BASE_URL, (data) => {
+              console.log("DATA", data);
+            });
+        }, 3000);
+      });
+      google.charts.load("current", { packages: ["corechart"] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart(co, nox, alc, smo, met) {
+        var data = google.visualization.arrayToDataTable([
+          ["Name", "Concentartion"],
+          ["Carbon Monoxide", co],
+          ["NOx,SOx", nox],
+          ["Alcohol", alc],
+          ["Smoke", smo],
+          ["Methane", met],
+        ]);
+
+        var options = {
+          title: "Air Quality Index ",
+        };
+
+        var chart = new google.visualization.PieChart(
+          document.getElementById("piechart")
+        );
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body class="w3-light-grey">
+    <!-- Top container -->
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index: 4">
+      <button
+        class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
+        onclick="w3_open();"
+      >
+        <i class="fa fa-bars"></i>  Menu
+      </button>
+      <span class="w3-bar-item w3-right">Department of EEE, DSCE</span>
+    </div>
+
+    <!-- Sidebar/menu -->
+    <nav
+      class="w3-sidebar w3-collapse w3-white w3-animate-left"
+      style="z-index: 3; width: 300px"
+      id="mySidebar"
+    >
+      <br />
+      <div class="w3-container w3-row">
+        <div class="w3-col">
+          <h5>
+            <strong>IoT BASED AIR QUALITY DATA ACQUISITION SYSTEM</strong>
+          </h5>
+          <br />
+        </div>
+      </div>
+      <hr />
+      <div class="w3-container">
+        <h5>Analysis Dashboard</h5>
+      </div>
+      <div class="w3-bar-block">
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+          onclick="w3_close()"
+          title="close menu"
+          ><i class="fa fa-remove fa-fw"></i>  Close Menu</a
+        >
+        <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"
+          ><i class="fa fa-bullseye fa-fw"></i>  Overview</a
+        >
+        <a href="#analysis" class="w3-bar-item w3-button w3-padding"
+          ><i class="fa fa-project-diagram fa-fw"></i> Data Analysis</a
+        >
+        <a href="#graph" class="w3-bar-item w3-button w3-padding"
+          ><i class="fa fa-chart-pie fa-fw"></i> Graphical Representation</a
+        >
+        <!-- <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-database fa-fw"></i>  Componets</a> -->
+        <a href="#circuit" class="w3-bar-item w3-button w3-padding"
+          ><i class="fa fa-tools fa-fw"></i> Circuit construction</a
+        >
+        <a href="#video" class="w3-bar-item w3-button w3-padding"
+          ><i class="fa fa-poll-h fa-fw"></i>  Prototype results</a
+        >
+        <a href="#guide" class="w3-bar-item w3-button w3-padding"
+          ><i class="fa fa-user fa-fw"></i>  Guide</a
+        >
+        <a href="#team" class="w3-bar-item w3-button w3-padding"
+          ><i class="fa fa-users fa-fw"></i>  Our Team</a
+        >
+      </div>
+    </nav>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div
+      class="w3-overlay w3-hide-large w3-animate-opacity"
+      onclick="w3_close()"
+      style="cursor: pointer"
+      title="close side menu"
+      id="myOverlay"
+    ></div>
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left: 300px; margin-top: 43px">
+      <!-- Header -->
+      <header class="w3-container" style="padding-top: 22px">
+        <h5>
+          <b><i class="fas fa-chart-network"></i>Generated Data</b>
+        </h5>
+      </header>
+      <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+          <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-left">
+              <i class="fa fa-temperature-low w3-xxxlarge"></i>
+            </div>
+            <div class="w3-right">
+              <h3><span id="temperature">{{ tempt }}</span> &#8451;</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>Temperature</h2>
+          </div>
+        </div>
+        <div class="w3-quarter">
+          <div class="w3-container w3-blue w3-padding-16">
+            <div class="w3-left"><i class="fa fa-tint w3-xxxlarge"></i></div>
+            <div class="w3-right">
+              <h3><span id="humidity">{{ Hum }}</span> bar</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>Humidity</h2>
+          </div>
+        </div>
+        <div class="w3-quarter">
+          <div class="w3-container w3-teal w3-padding-16">
+            <div class="w3-left"><i class="fa fa-smog w3-xxxlarge"></i></div>
+            <div class="w3-right">
+              <h3><span id="carbon_monoxide">{{ MQ9 }}</span> ppm</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>Carbon Monoxide</h2>
+          </div>
+        </div>
+        <div class="w3-quarter">
+          <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left">
+              <i class="fa fa-fire-extinguisher w3-xxxlarge"></i>
+            </div>
+            <div class="w3-right">
+              <h3><span id="nox">{{ MQ135 }}</span> ppm</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>NOx,SOx</h2>
+          </div>
+        </div>
+      </div>
+      <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+          <div class="w3-container w3-green w3-text-white w3-padding-16">
+            <div class="w3-left">
+              <i class="fa fa-glass-martini-alt w3-xxxlarge"></i>
+            </div>
+            <div class="w3-right">
+              <h3><span id="alcohol">{{ MQ3 }}</span> ppm</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>Alcohol</h2>
+          </div>
+        </div>
+        <div class="w3-quarter">
+          <div class="w3-container w3-grey w3-text-white w3-padding-16">
+            <div class="w3-left">
+              <i class="fas fa-smoking w3-xxxlarge"></i>
+            </div>
+            <div class="w3-right">
+              <h3><span id="smoke">{{ MQ2 }}</span> ppm</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>Smoke</h2>
+          </div>
+        </div>
+        <div class="w3-quarter">
+          <div class="w3-container w3-light-blue w3-text-white w3-padding-16">
+            <div class="w3-left">
+              <i class="fas fa-oil-can w3-xxxlarge"></i>
+            </div>
+            <div class="w3-right">
+              <h3><span id="methane">{{ MQ4 }}</span> ppm</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h2>Methane</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-panel" id="analysis">
+        <div class="w3-row-padding" style="margin: 0 -16px">
+          <div class="w3-main" style="align-items: center">
+            <h5>
+              <b><i class="fa fa-dashboard"></i> AQI Levels</b>
+            </h5>
+            <ul class="w3-ul w3-card-4 w3-white">
+              <li class="w3-padding-16">
+                <img
+                  src="/static/images/aqi-levels.png"
+                  style="margin: auto; padding-left: 260px"
+                  alt="Google Regional Map"
+                />
+              </li>
+            </ul>
+          </div>
+          <div class="w3-main" style="align-items: center; margin-top: 20px">
+            <h5>
+              <b
+                ><i class="fas fa-chart-network"></i>Concentration of pollutants
+                in different environments</b
+              >
+            </h5>
+            <br />
+            <ul class="w3-ul w3-card-4 w3-white">
+              <li class="w3-padding-16">
+                <img
+                  src="/static/images/concentration of pollutants.png"
+                  style="margin: auto; padding-left: 260px"
+                  alt="Google Regional Map"
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="w3-container">
+        <h5>
+          <b><i class="fas fa-chart-network"></i>Graphical Representation</b>
+        </h5>
+        <ul class="w3-ul w3-card-4 w3-white">
+          <li class="w3-padding-16">
+            <div class="pie-graph" id="piechart"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="w3-panel" id="graph"></div>
+      <div class="w3-container" id="circuit"></div>
+      <div id="image"></div>
+      <div class="w3-container">
+        <h5>
+          <b><i class="fas fa-chart-network"></i>Circuit Constructed</b>
+        </h5>
+        <ul class="w3-ul w3-card-4 w3-white">
+          <li class="w3-padding-16">
+            <div style="padding-left: 300px">
+              <img
+                width="520"
+                height="440"
+                src="/static/images/IMG_20210423_114054_2.jpg"
+                alt="circuit-image"
+              />
+            </div>
+            <div>
+              <br />
+              <p style="text-align: justify">
+                The global environment is currently facing a major issue of air
+                pollution. It is one of the foremost causes of environmental and
+                social health risks in India. Air pollution poses a serious
+                threat to living things, ecosystem and climate, especially on
+                human health in densely populated urban areas where the
+                pollution levels continuously starts increasing above the safer
+                limits. Real time air quality monitoring systems require special
+                features like exact measurement of the parameters and analysis
+                of the same. It makes decision making on a timely basis and very
+                easy for monitoring and controlling air quality. Currently
+                monitoring urban air quality is a critical subject that needs to
+                be looked after for enhancing the well-being of citizens. The
+                ultimate target of these systems is to provide exact, live
+                information concerning the air pollution threats and to the
+                relevant authorities for taking the necessary decisions and
+                actions to improve the air quality. Real time representation of
+                current scenarios can be seen through such applications which
+                allow us to do health impact evaluations. The level of pollution
+                has increased with time by a lot of factors like the increase in
+                population, increased vehicle use, industrialization and
+                urbanization which results in harmful effects on human wellbeing
+                by directly affecting health of the population exposed to it. In
+                order to monitor in this project, we are going to make an IOT
+                Based Air Pollution Monitoring System in which we will monitor
+                the Air Quality over a web server using internet and will
+                activate an alarm when the air quality goes down beyond a
+                certain level, means when there is sufficient amount of harmful
+                gases are present in the air like CO2, smoke, alcohol, benzene
+                and NH3. It will show the air elements in PPM on the LCD and as
+                well as on the webpage so that we can monitor it very easily. In
+                this IOT project, you can monitor the pollution level from
+                anywhere using your computer or mobile.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div id="video"></div>
+      <div class="w3-container">
+        <h5>
+          <b><i class="fas fa-chart-network"></i>Demo Video</b>
+        </h5>
+        <ul class="w3-ul w3-card-4 w3-white">
+          <li class="w3-padding-16">
+            <video width="820" height="440" controls>
+              <source src="/static/videos/Project ppt.mp4" type=video/mp4>
+            </video>
+          </li>
+        </ul>
+      </div>
+      <div class="w3-container" id="guide">
+        <h5>
+          <b><i class="fas fa-chart-network"></i>Project Guide</b>
+        </h5>
+        <ul class="w3-ul w3-card-4 w3-white">
+          <li class="w3-padding-16">
+            <span class="w3-xlarge"
+              >DR. N. SIVAKUMAR
+              <span class="w3-opacity w3-medium"
+                >Associate Professor</span
+              ></span
+            >
+            <p>B.E., M.Tech., Ph.D. (IIT Roorkee) Department of EEE, DSCE</p>
+            <br />
+          </li>
+        </ul>
+      </div>
+      <br />
+      <div class="w3-container" id="team">
+        <h5>
+          <b><i class="fas fa-chart-network"></i>Our Team</b>
+        </h5>
+        <ul class="w3-ul w3-card-4 w3-white">
+          <li class="w3-padding-16">
+            <span class="w3-xlarge"
+              >PG Bhavyashree<br />
+              1DS17EE067</span
+            ><br />
+          </li>
+          <li class="w3-padding-16">
+            <span class="w3-xlarge"
+              >Pooja Khader<br />
+              1DS17EE070</span
+            ><br />
+          </li>
+          <li class="w3-padding-16">
+            <span class="w3-xlarge"
+              >Rohan Amaresh<br />
+              1DS17EE080</span
+            ><br />
+          </li>
+          <li class="w3-padding-16">
+            <span class="w3-xlarge"
+              >Shushal P<br />
+              1DS17EE094</span
+            ><br />
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="w3-container w3-dark-grey w3-padding-32">
+    <div class="w3-row">
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-green">Demographic</h5>
+        <p>Language</p>
+        <p>Country</p>
+        <p>City</p>
+      </div>
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-red">System</h5>
+        <p>Browser</p>
+        <p>OS</p>
+        <p>More</p>
+      </div>
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-orange">Target</h5>
+        <p>Users</p>
+        <p>Active</p>
+        <p>Geo</p>
+        <p>Interests</p>
+      </div>
+    </div>
+  </div> -->
+
+      <!-- Footer -->
+      <footer class="w3-container w3-padding-16 w3-light-grey">
+        <h4 style="text-align: center">
+          Department Of Electrical & Electronics, DSCE
+        </h4>
+      </footer>
+
+      <!-- End page content -->
+    </div>
+
+    <script>
+      // Get the Sidebar
+      var mySidebar = document.getElementById("mySidebar");
+
+      // Get the DIV with overlay effect
+      var overlayBg = document.getElementById("myOverlay");
+
+      // Toggle between showing and hiding the sidebar, and add overlay effect
+      function w3_open() {
+        if (mySidebar.style.display === "block") {
+          mySidebar.style.display = "none";
+          overlayBg.style.display = "none";
+        } else {
+          mySidebar.style.display = "block";
+          overlayBg.style.display = "block";
+        }
+      }
+
+      // Close the sidebar with the close button
+      function w3_close() {
+        mySidebar.style.display = "none";
+        overlayBg.style.display = "none";
+      }
+    </script>
+  </body>
 </html>

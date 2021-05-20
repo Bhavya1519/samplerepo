@@ -1,5 +1,18 @@
+@media only screen and (min-width: 600px) {
+    .pie-graph {
+      height: 500px;
+      width: 1000px;
+      
+    }
+  
+  }
+  @media only screen and (max-width: 500px) {
+    .pie-graph {
+      height: 100%;
+      width: 100%;
+      
+    }
+  
+  }
 
-body {
-   background: blue;
-   color: yellow;
-}
+html,body,h1,h2,h3,h4,h5 {font-family: "Arvo", sans-serif}

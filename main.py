@@ -16,7 +16,7 @@ def get_data():
 
 
 @app.route("/api/v1/get_data")
-def index():
+def api_get_data():
     # Read Sensors Status
     tempval = get_data().split("=")[-1].strip()
     humval = get_data().split("=")[-1].strip()
@@ -39,6 +39,9 @@ def index():
     }
     return jsonify(templateData)
 
-
+@app.route("/")
+def home():
+	return render_template("index.html")
+	
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
