@@ -62,7 +62,7 @@
       }
       $(document).ready(function () {
         google.charts.load("current", { packages: ["corechart"] });  
-        google.charts.setOnLoadCallback(drawChart); 
+        google.charts.setOnLoadCallback(drawChart(10, 10, 10, 10, 10)); 
         setInterval(() => {
           $.
             get(BASE_URL, (data) => {
