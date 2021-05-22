@@ -17,7 +17,7 @@ def get_data():
 
 @app.route("/get_data")
 def get_file_data():
-    return send_from_directory("static", "data.csv")
+    return send_from_directory("static", "data.csv", as_attachment=True)
 
 @app.route("/api/v1/get_data")
 def api_get_data():
