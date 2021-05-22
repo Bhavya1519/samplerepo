@@ -37,7 +37,7 @@ def api_get_data():
         'MQ2': mq2val,
         'MQ4': mq4val
     }
-    now = datetime.now().strftime('%m/%d/%Y, %H:%M:%S')
+    now = datetime.now().strftime('%m/%d/%Y-%H:%M:%S')
     with open("data.csv", "a") as f:
         f.write("{},{},{},{},{},{},{},{}\n"
         .format(now, templateData['tempt'], templateData['Hum'], templateData['MQ3'], templateData['MQ135'], templateData['MQ9'], templateData['MQ2'], templateData['MQ4']))
