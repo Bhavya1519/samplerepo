@@ -40,18 +40,6 @@
         document.getElementById("smoke").innerText = smoke;
         document.getElementById("methane").innerText = methane;
       }
-      $(document).ready(function () {
-        setInterval(() => {
-          $.
-            get(BASE_URL, (data) => {
-              console.log("DATA", data);
-              setData(data.tempt, data.Hum, data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4)
-            });
-        }, 3000);
-      });
-      google.charts.load("current", { packages: ["corechart"] });
-      google.charts.setOnLoadCallback(drawChart);
-
       function drawChart(co, nox, alc, smo, met) {
         var data = google.visualization.arrayToDataTable([
           ["Name", "Concentartion"],
@@ -72,6 +60,18 @@
 
         chart.draw(data, options);
       }
+      $(document).ready(function () {
+        google.charts.load("current", { packages: ["corechart"] });   
+        setInterval(() => {
+          $.
+            get(BASE_URL, (data) => {
+              console.log("DATA", data);
+              setData(data.tempt, data.Hum, data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);
+              google.charts.setOnLoadCallback(() => {drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4)});
+            });
+        }, 3000);
+      });
+      
     </script>
   </head>
 
