@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
-import pyserial as pyserial
+import serial as serial
 from flask import Flask, render_template, jsonify
 
-ser_obj = pyserial.Serial("/dev/ttyACM0", 9600)
+ser_obj = serial.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
 
 def get_data():
