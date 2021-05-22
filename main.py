@@ -1,13 +1,13 @@
 import RPi.GPIO as GPIO
-import serial as ser
+import pyserial as pyserial
 from flask import Flask, render_template, jsonify
 
-ser_obj = ser.Serial("/dev/ttyACM0", 9600)
+ser_obj = pyserial.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
 
 def get_data():
     line = ""
-    if(ser_obj.in_waiting > 0):
+    if(ser_obj.inWaiting() > 0):
         line = ser_obj.readline()
 
     return line
@@ -33,7 +33,6 @@ def api_get_data():
         'MQ9': mq9val,
         'MQ2': mq2val,
         'MQ4': mq4val
-
     }
     return jsonify(templateData)
 
