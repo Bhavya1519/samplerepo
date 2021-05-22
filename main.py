@@ -39,7 +39,8 @@ def api_get_data():
     }
     now = datetime.now().strftime('%m/%d/%Y, %H:%M:%S')
     with open("data.csv", "a") as f:
-        f.write(f"{now},{templateData.tempt},{templateData.Hum},{templateData.MQ3},{templateData.MQ135},{templateData.MQ9},{templateData.MQ2},{templateData.MQ4}\n")
+        f.write("{},{},{},{},{},{},{},{}\n"
+        .format(now, templateData.tempt, templateData.Hum, templateData.MQ3, templateData.MQ135, templateData.MQ9, templateData.MQ2, templateData.MQ4))
     return jsonify(templateData)
 
 
