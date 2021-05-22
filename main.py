@@ -16,7 +16,7 @@ def get_data():
     return line.decode("utf-8")
 
 @app.route("/get_data")
-def get_data():
+def get_file_data():
     return send_from_directory("static", "data.csv")
 
 @app.route("/api/v1/get_data")
