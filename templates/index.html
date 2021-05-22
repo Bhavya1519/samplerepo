@@ -16,15 +16,15 @@
     />
     <link rel="stylesheet" href="/static/style.css" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
       let BASE_URL = "/api/v1/get_data";
       google.charts.load("current", { packages: ["corechart"] });  
-      google.charts.setOnLoadCallback(drawChart(10, 10, 10, 10, 10));
+      google.charts.setOnLoadCallback(() => {drawChart(10, 10, 10, 10, 10)});
       function setData(
         temperature,
         humidity,
