@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import serial as serial
-from flask import Flask, render_template, jsonify, send_from_directory
+from flask import Flask, render_template, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 from datetime import datetime
 
@@ -17,7 +17,7 @@ def get_data():
 
 @app.route("/get_data")
 def get_file_data():
-    return send_from_directory("static", "data.csv", as_attachment=True)
+    return send_file("/static/data.csv", as_attachment=True)
 
 @app.route("/api/v1/get_data")
 def api_get_data():
