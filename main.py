@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import serial as serial
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_from_directory
 from flask_cors import CORS
 from datetime import datetime
 
@@ -15,6 +15,9 @@ def get_data():
         line = ser_obj.readline()
     return line.decode("utf-8")
 
+@app.route("/get_data")
+def get_data():
+    return send_from_directory("static", "data.csv")
 
 @app.route("/api/v1/get_data")
 def api_get_data():
