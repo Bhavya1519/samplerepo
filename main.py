@@ -6,11 +6,10 @@ ser_obj = serial.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
 
 def get_data():
-    line = ""
+    line = b""
     if(ser_obj.inWaiting() > 0):
         line = ser_obj.readline()
-    print("LINE", line)
-    return line
+    return line.decode("utf-8")
 
 
 @app.route("/api/v1/get_data")
