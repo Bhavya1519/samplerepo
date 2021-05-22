@@ -9,7 +9,7 @@ def get_data():
     line = ""
     if(ser_obj.inWaiting() > 0):
         line = ser_obj.readline()
-
+    print("LINE", line)
     return line
 
 
