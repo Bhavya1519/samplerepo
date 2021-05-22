@@ -69,7 +69,8 @@
             get(BASE_URL, (data) => {
               console.log("DATA", data);
               setData(data.tempt, data.Hum, data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);
-              drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);
+              google.charts.setOnLoadCallback(() => {drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);});
+              // drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);
             });
         }, 3000);
       });
