@@ -23,6 +23,8 @@
     ></script>
     <script type="text/javascript">
       let BASE_URL = "/api/v1/get_data";
+      google.charts.load("current", { packages: ["corechart"] });  
+      google.charts.setOnLoadCallback(drawChart(10, 10, 10, 10, 10));
       function setData(
         temperature,
         humidity,
@@ -61,8 +63,7 @@
         chart.draw(data, options);
       }
       $(document).ready(function () {
-        google.charts.load("current", { packages: ["corechart"] });  
-        google.charts.setOnLoadCallback(drawChart(10, 10, 10, 10, 10)); 
+         
         setInterval(() => {
           $.
             get(BASE_URL, (data) => {
