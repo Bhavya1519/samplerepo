@@ -2,10 +2,12 @@ import RPi.GPIO as GPIO
 import serial as serial
 from flask import Flask, render_template, jsonify
 from flask_cors import CORS
+from datetime import datetime
 
 ser_obj = serial.Serial("/dev/ttyACM0", 9600)
 app = Flask(__name__)
 CORS(app)
+
 
 def get_data():
     line = b""
@@ -35,11 +37,15 @@ def api_get_data():
         'MQ2': mq2val,
         'MQ4': mq4val
     }
+    with open("data.csv", "a") as f:
+        f.write(f"{datetime.now().strftime('%m/%d/%Y, %H:%M:%S')},{templateData.tempt},{templateData.Hum},{templateData.MQ3},{templateData.MQ135},{templateData.MQ9},{templateData.MQ2},{templateData.MQ4}\n")
     return jsonify(templateData)
+
 
 @app.route("/")
 def home():
-	return render_template("index.html")
+    return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

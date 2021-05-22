@@ -232,7 +232,12 @@
         <ul class="w3-ul w3-card-4 w3-white">
           <li class="w3-padding-16">
             <!-- <div class="pie-graph" id="piechart"></div> -->
-            <canvas id="myChart" style="width:100%;max-width:600px; height: 500px;"></canvas>
+            <div class="chartjs-container">
+              <canvas
+                id="myChart"
+                style="width: 100%; max-width: 600px; height: 500px"
+              ></canvas>
+            </div>
           </li>
         </ul>
       </div>
@@ -415,98 +420,100 @@
       }
     </script>
 
-<script type="text/javascript">
-  let BASE_URL = "/api/v1/get_data";
-  // google.charts.load("current", { packages: ["corechart"] });
-  // google.charts.setOnLoadCallback(() => {drawChart(10, 10, 10, 10, 10)});
-  function setData(
-    temperature,
-    humidity,
-    carbon_monoxide,
-    nox,
-    alcohol,
-    smoke,
-    methane
-  ) {
-    document.getElementById("temperature").innerText = temperature;
-    document.getElementById("humidity").innerText = humidity;
-    document.getElementById("carbon_monoxide").innerText = carbon_monoxide;
-    document.getElementById("nox").innerText = nox;
-    document.getElementById("alcohol").innerText = alcohol;
-    document.getElementById("smoke").innerText = smoke;
-    document.getElementById("methane").innerText = methane;
-  }
-  // function drawChart(co, nox, alc, smo, met) {
-  //   var data = new google.visualization.arrayToDataTable([
-  //     ["Name", "Concentartion"],
-  //     ["Carbon Monoxide", co],
-  //     ["NOx,SOx", nox],
-  //     ["Alcohol", alc],
-  //     ["Smoke", smo],
-  //     ["Methane", met],
-  //   ]);
+    <script type="text/javascript">
+      let BASE_URL = "/api/v1/get_data";
+      // google.charts.load("current", { packages: ["corechart"] });
+      // google.charts.setOnLoadCallback(() => {drawChart(10, 10, 10, 10, 10)});
+      function setData(
+        temperature,
+        humidity,
+        carbon_monoxide,
+        nox,
+        alcohol,
+        smoke,
+        methane
+      ) {
+        document.getElementById("temperature").innerText = temperature;
+        document.getElementById("humidity").innerText = humidity;
+        document.getElementById("carbon_monoxide").innerText = carbon_monoxide;
+        document.getElementById("nox").innerText = nox;
+        document.getElementById("alcohol").innerText = alcohol;
+        document.getElementById("smoke").innerText = smoke;
+        document.getElementById("methane").innerText = methane;
+      }
+      // function drawChart(co, nox, alc, smo, met) {
+      //   var data = new google.visualization.arrayToDataTable([
+      //     ["Name", "Concentartion"],
+      //     ["Carbon Monoxide", co],
+      //     ["NOx,SOx", nox],
+      //     ["Alcohol", alc],
+      //     ["Smoke", smo],
+      //     ["Methane", met],
+      //   ]);
 
-  //   var options = {
-  //     title: "Air Quality Index ",
-  //   };
+      //   var options = {
+      //     title: "Air Quality Index ",
+      //   };
 
-  //   var chart = new google.visualization.PieChart(
-  //     document.getElementById("piechart")
-  //   );
+      //   var chart = new google.visualization.PieChart(
+      //     document.getElementById("piechart")
+      //   );
 
-  //   chart.draw(data, options);
-  // }
-  var labels = [
-    "Carbon Monoxide",
-    "NOx SOx",
-    "Alcohol",
-    "Smoke",
-    "Methane",
-  ];
-  var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145"];
-  var data = [10, 10, 10, 10, 10];
-  var myChart = new Chart("myChart", {
-    type: "pie",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          backgroundColor: barColors,
-          data: data,
+      //   chart.draw(data, options);
+      // }
+      var labels = [
+        "Carbon Monoxide",
+        "NOx SOx",
+        "Alcohol",
+        "Smoke",
+        "Methane",
+      ];
+      var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145"];
+      var data = [10, 10, 10, 10, 10];
+      var myChart = new Chart("myChart", {
+        type: "pie",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              backgroundColor: barColors,
+              data: data,
+            },
+          ],
         },
-      ],
-    },
-    options: {
-      title: {
-        display: true,
-        text: "Concentration",
-      },
-    },
-  });
-  $(document).ready(function () {
-    setInterval(() => {
-      $.get(BASE_URL, (data) => {
-        console.log("DATA", data);
-        setData(
-          data.tempt,
-          data.Hum,
-          data.MQ9,
-          data.MQ135,
-          data.MQ3,
-          data.MQ2,
-          data.MQ4
-        );
-        myChart.data.datasets[0].data = [data.MQ9,
-          data.MQ135,
-          data.MQ3,
-          data.MQ2,
-          data.MQ4];
-          myChart.update();
-        // google.charts.setOnLoadCallback(() => {drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);});
-        // drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);
+        options: {
+          title: {
+            display: true,
+            text: "Concentration",
+          },
+        },
       });
-    }, 3000);
-  });
-</script>
+      $(document).ready(function () {
+        setInterval(() => {
+          $.get(BASE_URL, (data) => {
+            console.log("DATA", data);
+            setData(
+              data.tempt,
+              data.Hum,
+              data.MQ9,
+              data.MQ135,
+              data.MQ3,
+              data.MQ2,
+              data.MQ4
+            );
+            myChart.data.datasets[0].data = [
+              data.MQ9,
+              data.MQ135,
+              data.MQ3,
+              data.MQ2,
+              data.MQ4,
+            ];
+            myChart.update();
+            // google.charts.setOnLoadCallback(() => {drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);});
+            // drawChart(data.MQ9, data.MQ135, data.MQ3, data.MQ2, data.MQ4);
+          });
+        }, 3000);
+      });
+    </script>
   </body>
 </html>
